@@ -1,0 +1,33 @@
+#include <stdio.h>
+
+#define MAX_DATA 100
+
+
+int main(int argc, char* argv[]) {
+    printf("%s", "start.\n");
+    char* file_name = ".logfind";
+    printf("%s", "Opening.\n");
+    FILE* dot_log = fopen(file_name, "r");
+    if (dot_log == NULL) {
+        goto error;
+    }
+
+    char log_name[MAX_DATA];
+
+    while (fgets(log_name, MAX_DATA, dot_log) != NULL) {
+        printf("%s", log_name);
+        FILE* log = fopen(log_name, "r");
+        if (log == NULL) {
+            printf("Failed to open %s.\n", log_name);
+            goto error;
+        }
+        fclose(log);
+    }
+
+    fclose(dot_log);
+    return 0;
+
+error:
+    if (dot_log) fclose(dot_log);
+    return -1;
+}
