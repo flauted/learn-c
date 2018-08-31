@@ -1,7 +1,7 @@
 #include <lcthw/list.h>
 #include <lcthw/dbg.h>
 
-list* List_create() {
+List* List_create() {
     return calloc(1, sizeof(List));
 }
 
@@ -46,6 +46,11 @@ void List_push(List* list, void* value) {
 
 error:
     return;
+}
+
+void* List_pop(List* list) {
+    ListNode* node = list->last;
+    return node != NULL ? List_remove(list, node) : NULL;
 }
 
 void List_unshift(List* list, void* value) {
